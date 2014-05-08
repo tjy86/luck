@@ -1,0 +1,44 @@
+<br>
+<%= form_tag charges_path do %>
+  Please confirm payment of <%= number_to_currency(@amt) %>?
+<% end %>
+
+<script src="https://checkout.stripe.com/checkout.js"></script>
+
+<button type="button" class="btn btn-success" id="customButton">Pay now</button>
+
+<script>
+  var handler = StripeCheckout.configure({
+    key: 'pk_live_gztqxkPZkzDVwZfXZZptBYio',
+    // image: '/square-image.png',
+    token: function(token, args) {
+      console.log(token)
+      $.ajax({
+        beforeSend: function(xhr){
+                xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
+            },
+        url: "/charges",
+        type: 'POST',
+        data: { token: token.id, email: token.email, amount: <%= @amt %>},
+        success: function(data) {
+          alert('Thank you for the payment!');
+          window.location.replace("http://www.luckmgmt.com");
+        },
+        error: function(data) {
+          console.log("Ajax Error!");
+          console.log(data);
+        }
+      }); // end ajax call
+    }
+  });
+
+  document.getElementById('customButton').addEventListener('click', function(e) {
+    // Open Checkout with further options
+    handler.open({
+      name: 'Luck Management',
+      description: "<%= number_to_currency(@amt) %>",
+      amount: <%= @amt %> * 100
+    });
+    e.preventDefault();
+  });
+</script>

@@ -1,0 +1,10 @@
+<br>
+<form class="form-inline" role="form" action='/amt' method='post'>
+  <div class="form-group">
+    Amount:
+
+    <input type='number' name='payAmount' class='form-control' id="payAmount" placeholder='0.00'></a>
+    <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>" />
+    <input type="submit" class="btn btn-default" id="payButton" value="Next">
+  </div>
+</form>

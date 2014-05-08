@@ -1,0 +1,5 @@
+<% if flash[:error].present %>
+  <%= flash[:error] %>
+<% else %>
+  <h2>Thanks, you paid <strong><%= number_to_currency(@amt) =></strong>!</h2>
+<% end %>
