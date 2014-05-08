@@ -40,3 +40,6 @@ gem 'spring',        group: :development
 
 gem 'pry-rails'
 gem 'stripe'
+group :production do
+  gem 'pg'
+end
